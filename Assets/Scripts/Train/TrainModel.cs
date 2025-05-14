@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace ResourceRailNetwork.Train
 {
+    /// <summary>
+    /// Represents a train entity in the rail network. Maintains train state,
+    /// movement parameters, and visual representation. Handles path following
+    /// and resource transportation logic.
+    /// </summary>
     public class TrainModel
     {
         public TrainSettings TrainSettings { get; }
@@ -18,7 +23,9 @@ namespace ResourceRailNetwork.Train
         public List<Node> CurrentPath { get; private set; }
         public bool HasCargo { get; private set; }
         public float MiningTimer { get; private set; }
+        
         private GameObject View { get; }
+        
         public float Speed => TrainSettings.Speed;
         public float MiningDuration => TrainSettings.MiningTime;
 
@@ -38,11 +45,6 @@ namespace ResourceRailNetwork.Train
             State = TrainState.Moving;
             Progress = 0;
             HasCargo = false;
-        }
-
-        private void OnSettingsChanged()
-        {
-            
         }
 
         public void SetRoute(Route route)

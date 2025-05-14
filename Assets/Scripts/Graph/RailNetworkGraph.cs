@@ -122,6 +122,8 @@ namespace ResourceRailNetwork.Graph
         /// <returns>-1 if no path exists</returns>
         public int GetDistance(Node start, Node end)
         {
+            if (start == end) return 0;
+            
             if (_specificNodes.Contains(end))
             {
                 // this is already calculated path

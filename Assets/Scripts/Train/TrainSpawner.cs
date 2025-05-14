@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace ResourceRailNetwork.Train
 {
+    /// <summary>
+    /// Handles train instantiation and initialization logic
+    /// </summary>
     public class TrainSpawner
     {
         public TrainModel[] SpawnTrains(TrainConfig[] trainConfigs, Transform trainsParent, IRailNetworkGraph graph,
