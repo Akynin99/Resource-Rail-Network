@@ -23,7 +23,8 @@ namespace ResourceRailNetwork.Graph.GraphRenderer
                 transform =
                 {
                     parent = transform
-                }
+                },
+                name = "EdgeRenderers"
             };
 
             foreach (var edge in edges)
