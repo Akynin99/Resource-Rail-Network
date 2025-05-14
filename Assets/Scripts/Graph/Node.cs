@@ -1,0 +1,61 @@
+﻿using System;
+using UnityEngine;
+
+namespace ResourceRailNetwork.Graph
+{
+    public class Node : MonoBehaviour
+    {
+        [SerializeField] protected Edge[] edges;
+
+        public Edge[] Edges => edges;
+
+        private void OnDrawGizmos()
+        {
+            if (edges == null || edges.Length < 1) return;
+
+            foreach (var edge in edges)
+            {
+                if (edge == null || edge.EndNode == null || edge.Length < 0) continue;
+                
+                Vector3 startPos = transform.position;
+                Vector3 endPos = edge.EndNode.transform.position;
+
+                bool twoWayConnection = edge.EndNode.IsConnectedTo(this);
+                
+                Gizmos.color = twoWayConnection ? Color.white: Color.yellow;
+
+                if (twoWayConnection)
+                {
+                    if (edge.Length != edge.EndNode.LengthTo(this)) 
+                        Gizmos.color = Color.red; 
+                }
+                
+                Gizmos.DrawLine(startPos, endPos);
+            }
+        }
+
+        public bool IsConnectedTo(Node node)
+        {
+            if (node == null || edges == null) return false;
+
+            foreach (var edge in edges)
+            {
+                if (edge.EndNode == node) return true;
+            }
+
+            return false;
+        }
+
+        public int LengthTo(Node node)
+        {
+            if (!IsConnectedTo(node)) return -1;
+
+            foreach (var edge in edges)
+            {
+                if (edge.EndNode == node) return edge.Length;
+            }
+
+            return -1;
+        }
+    }
+}
