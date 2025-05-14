@@ -82,9 +82,7 @@ namespace ResourceRailNetwork.Train
                 if (train.LastNode == train.BestRoute.Mine)
                 {
                     // start mining
-                    train.SetState(TrainModel.TrainState.Mining);
-                    train.ResetMiningTimer();
-                    train.SetLastMine(train.BestRoute.Mine);
+                    StartMining(train);
                 }
                 else
                 {
@@ -94,6 +92,13 @@ namespace ResourceRailNetwork.Train
             }
             
             train.RefreshViewPos();
+        }
+
+        private void StartMining(TrainModel train)
+        {
+            train.SetState(TrainModel.TrainState.Mining);
+            train.ResetMiningTimer();
+            train.SetLastMine(train.BestRoute.Mine);
         }
         
         private void MiningProcessing(TrainModel train, float deltaTime)
@@ -222,7 +227,17 @@ namespace ResourceRailNetwork.Train
             if (train.NextNode == null)
             {
                 // train is in the last node
-                train.SetNextNode(_graph.GetNextNode(train.LastNode, target, out var path));
+
+                if (train.LastNode == target)
+                {
+                    // train already in best mine
+                    
+                    StartMining(train);
+                    return;
+                }
+                
+                Node nextNode = _graph.GetNextNode(train.LastNode, target, out var path);
+                train.SetNextNode(nextNode);
                 train.SetCurrentPath(path);
                 return;
             }

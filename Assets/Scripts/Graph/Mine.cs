@@ -8,7 +8,14 @@ namespace ResourceRailNetwork.Graph
 
         private float _lastMult;
             
-        public float TimeMult => timeMult;
+        public float TimeMult
+        {
+            get
+            {
+                if (timeMult < 0) return 0;
+                return timeMult;
+            }
+        }
 
         protected override void Awake()
         {

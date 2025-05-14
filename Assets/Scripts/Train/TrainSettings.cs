@@ -13,8 +13,23 @@ namespace ResourceRailNetwork.Train
         private TrainController _trainController;
         private TrainModel _trainModel;
         
-        public float Speed => speed;
-        public float MiningTime => miningTime;
+        public float Speed
+        {
+            get
+            {
+                if (speed < 0) return 0;
+                return speed;
+            }
+        }
+
+        public float MiningTime
+        {
+            get
+            {
+                if (miningTime < 0) return 0;
+                return miningTime;
+            }
+        }
 
         public void Init(float initialSpeed, float initialMiningTime, TrainController trainController, TrainModel trainModel)
         {
