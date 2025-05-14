@@ -12,8 +12,15 @@ namespace ResourceRailNetwork.Core
         
         private float _lastMult;
         
-        public float ResourceMult => resourceMult;
-        
+        public float ResourceMult
+        {
+            get
+            {
+                if (resourceMult < 0) return 0;
+                return resourceMult;
+            }
+        }
+
         protected override void Awake()
         {
             base.Awake();
