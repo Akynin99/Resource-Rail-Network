@@ -1,4 +1,6 @@
-﻿namespace ResourceRailNetwork.Graph.GraphRenderer
+﻿using ResourceRailNetwork.Graph;
+
+namespace ResourceRailNetwork.GraphRenderer
 {
     public struct GraphEdge
     {

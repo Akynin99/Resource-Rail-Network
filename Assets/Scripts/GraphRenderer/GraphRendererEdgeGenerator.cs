@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using ResourceRailNetwork.Graph;
 
-namespace ResourceRailNetwork.Graph.GraphRenderer
+namespace ResourceRailNetwork.GraphRenderer
 {
     public static class GraphRendererEdgeGenerator
     {

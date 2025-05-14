@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using ResourceRailNetwork.Graph;
 using UnityEngine;
 
-namespace ResourceRailNetwork.Graph.GraphRenderer
+namespace ResourceRailNetwork.GraphRenderer
 {
     public class GraphRenderer : MonoBehaviour
     {
