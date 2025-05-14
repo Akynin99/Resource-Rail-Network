@@ -23,6 +23,8 @@ namespace ResourceRailNetwork.Graph
 
         private void Awake()
         {
+            CheckTopology();
+            
             // Initialize node tracking and event subscriptions
             foreach (var node in allNodes)
             {
@@ -46,6 +48,14 @@ namespace ResourceRailNetwork.Graph
             }
             
             PrecalculatePaths();
+        }
+
+        private void CheckTopology()
+        {
+            foreach (var node in allNodes)
+            {
+                node.CheckEdges();
+            }
         }
 
         /// <summary>
@@ -99,11 +109,6 @@ namespace ResourceRailNetwork.Graph
             int random = Random.Range(0, allNodes.Length);
 
             return allNodes[random];
-        }
-        
-        public List<Node> GetAllSpecificNodes()
-        {
-            return _specificNodes;
         }
 
         public List<Mine> GetAllMines()

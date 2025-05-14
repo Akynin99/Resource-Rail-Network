@@ -48,6 +48,8 @@ namespace ResourceRailNetwork.Core
             }
         }
         
+        
+        
         protected virtual void Awake()
         {
             _position = transform.position;
@@ -56,6 +58,26 @@ namespace ResourceRailNetwork.Core
         protected void SettingsChanged()
         {
             OnSettingsChanged?.Invoke();
+        }
+        
+        public void CheckEdges()
+        {
+            foreach (var edge in edges)
+            {
+                if (edge == null || edge.EndNode == null) continue;
+
+                bool twoWayConnection = edge.EndNode.IsConnectedTo(this);
+
+                if (!twoWayConnection)
+                {
+                    Debug.LogError("Incorrect graph topology!");
+                }
+
+                if (twoWayConnection && edge.Length != edge.EndNode.LengthTo(this))
+                {
+                    Debug.LogError("Incorrect edges length!");
+                }
+            }
         }
 
         public bool IsConnectedTo(Node node)
