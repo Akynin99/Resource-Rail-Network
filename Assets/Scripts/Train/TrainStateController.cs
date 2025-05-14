@@ -41,11 +41,12 @@ namespace ResourceRailNetwork.Train
 
         private void UpdateMovingState(TrainModel train, float deltaTime)
         {
-            if (!train.NextNode)
+            if (!train.NextNode || train.NextNode == train.LastNode)
             {
                 train.SetNextNode(train.LastNode);
                 HandleMovementCompletion(train);
                 train.RefreshView();
+                return;
             }
 
             float dist = deltaTime * train.Speed;

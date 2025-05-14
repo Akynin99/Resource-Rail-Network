@@ -13,7 +13,7 @@ namespace ResourceRailNetwork
         public override void InstallBindings()
         {
             Container.Bind<IGraphRenderer>().FromInstance(graphRenderer).AsSingle();
-            Container.Bind<IRailNetworkGraph>().FromInstance(railNetworkGraph).AsSingle().NonLazy();
+            Container.Bind<IRailNetworkGraph>().FromInstance(railNetworkGraph).AsSingle();
             Container.Bind<IResourceWallet>().To<ResourceWallet>().AsSingle().NonLazy();
         }
     }
