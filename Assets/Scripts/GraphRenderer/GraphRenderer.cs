@@ -1,20 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ResourceRailNetwork.Graph;
 using UnityEngine;
+using Zenject;
 
 namespace ResourceRailNetwork.GraphRenderer
 {
-    public class GraphRenderer : MonoBehaviour
+    public class GraphRenderer : MonoBehaviour, IGraphRenderer
     {
         [SerializeField] private LineRenderer correctEdgeRendererPrefab;
         [SerializeField] private LineRenderer oneWayEdgeRendererPrefab;
         [SerializeField] private LineRenderer badLengthEdgeRendererPrefab;
         [SerializeField] private float yOffset;
 
+        [Inject] private IRailNetworkGraph _graph;
+
         private LineRenderer[] _edgeRenderers;
-        
-        public void Init(Node[] nodes)
+
+        private void Start()
         {
+            Init();
+        }
+
+        private void Init()
+        {
+            Node[] nodes = _graph.GetAllNodes();
+            
             List<GraphEdge> edges = GraphRendererEdgeGenerator.CreateEdges(nodes);
             
             if (edges == null || edges.Count < 1) return;
@@ -57,8 +68,8 @@ namespace ResourceRailNetwork.GraphRenderer
                 
                 
                 
-                lineRenderer.SetPosition(0, edge.StartNode.transform.position + Vector3.up * yOffset);
-                lineRenderer.SetPosition(1, edge.EndNode.transform.position + Vector3.up * yOffset);
+                lineRenderer.SetPosition(0, edge.StartNode.Position + Vector3.up * yOffset);
+                lineRenderer.SetPosition(1, edge.EndNode.Position + Vector3.up * yOffset);
             }
         }
     }

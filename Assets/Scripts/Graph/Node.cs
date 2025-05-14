@@ -8,8 +8,12 @@ namespace ResourceRailNetwork.Graph
     {
         [SerializeField] protected Edge[] edges;
 
+        private Vector3 _position;
+
         public Edge[] Edges => edges;
         public List<PrecalculatedPath> CalculatedPaths { get; private set; }
+
+        public Vector3 Position => _position;
 
         private void OnDrawGizmos()
         {
@@ -46,6 +50,11 @@ namespace ResourceRailNetwork.Graph
             }
 
             return false;
+        }
+
+        private void Awake()
+        {
+            _position = transform.position;
         }
 
         public int LengthTo(Node node)

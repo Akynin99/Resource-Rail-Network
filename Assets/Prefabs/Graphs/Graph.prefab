@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8435147641114502988}
   - component: {fileID: 2842104083964473690}
-  - component: {fileID: 4266301079942697687}
   m_Layer: 0
   m_Name: Graph
   m_TagString: Untagged
@@ -66,23 +65,6 @@ MonoBehaviour:
   - {fileID: 1851886402307506474}
   - {fileID: 1917313298708681057}
   - {fileID: 1634556661502843797}
-  graphRenderer: {fileID: 4266301079942697687}
---- !u!114 &4266301079942697687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4548669205665226018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ec19596821849719c8ffabb0b65fd53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  correctEdgeRendererPrefab: {fileID: 5988926004947946300, guid: 9d5e120ab18df3549bf1bd1c855e9976, type: 3}
-  oneWayEdgeRendererPrefab: {fileID: 5988926004947946300, guid: 7a954941312307046b5a8dfcfdb5246f, type: 3}
-  badLengthEdgeRendererPrefab: {fileID: 5988926004947946300, guid: b06c9a489675b664fac94f98e8041fa6, type: 3}
-  yOffset: 0
 --- !u!1001 &1581568342590164517
 PrefabInstance:
   m_ObjectHideFlags: 0
