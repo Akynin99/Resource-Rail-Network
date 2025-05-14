@@ -58,6 +58,8 @@ Key technical aspects include:
 | **GameInstaller** | DI Setup | - Zenject bindings<br>- Component linking |
 | **TrainSettings** | Runtime config | - Live parameter tuning<br>- Change propagation |
 
+![Demo Preview](https://github.com/Akynin99/Resource-Rail-Network/blob/dev/Screenshots/ezgif-5a066039f13a82.gif)  
+
 ## 🚂 Tutorial: Train Configuration
 
 ### Scene Setup
