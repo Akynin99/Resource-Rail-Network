@@ -71,6 +71,7 @@ namespace ResourceRailNetwork.Graph
                     {
                         TargetNode = specificNode,
                         NextNodeInPath = path[1],
+                        Path = path,
                         Distance = distance,
                     };
                     
@@ -128,7 +129,7 @@ namespace ResourceRailNetwork.Graph
             return distance;
         }
 
-        public Node GetNextNode(Node start, Node end)
+        public Node GetNextNode(Node start, Node end, out List<Node> path)
         {
             if (_specificNodes.Contains(end))
             {
@@ -136,11 +137,15 @@ namespace ResourceRailNetwork.Graph
 
                 foreach (var calculatedPath in start.CalculatedPaths)
                 {
-                    if (calculatedPath.TargetNode == end) return calculatedPath.NextNodeInPath;
+                    
+                    if (calculatedPath.TargetNode != end) continue;
+
+                    path = calculatedPath.Path;
+                    return calculatedPath.NextNodeInPath;
                 }
             }
 
-            List<Node> path = _pathFinder.FindShortestPath(allNodes, start, end, out _);
+            path = _pathFinder.FindShortestPath(allNodes, start, end, out _);
 
             return path[1];
         }

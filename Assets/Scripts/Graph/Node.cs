@@ -19,6 +19,8 @@ namespace ResourceRailNetwork.Graph
 
         private void OnDrawGizmos()
         {
+            if (Application.isPlaying) return;
+            
             if (edges == null || edges.Length < 1) return;
 
             foreach (var edge in edges)

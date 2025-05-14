@@ -1,4 +1,5 @@
-﻿using ResourceRailNetwork.Graph;
+﻿using System.Collections.Generic;
+using ResourceRailNetwork.Graph;
 using UnityEngine;
 
 namespace ResourceRailNetwork.Train
@@ -12,7 +13,8 @@ namespace ResourceRailNetwork.Train
         public Node NextNode { get; private set; }
         public float Progress { get; private set; }
         public TrainState State { get; private set; }
-        public Route Route { get; private set; }
+        public Route BestRoute { get; private set; }
+        public List<Node> CurrentPath { get; private set; }
         public bool HasCargo { get; private set; }
         public float MiningTimer { get; private set; }
         private GameObject View { get; }
@@ -44,7 +46,7 @@ namespace ResourceRailNetwork.Train
 
         public void SetRoute(Route route)
         {
-            Route = route;
+            BestRoute = route;
         }
 
         public void SetNextNode(Node node)
@@ -108,6 +110,29 @@ namespace ResourceRailNetwork.Train
         public void SetState(TrainState state)
         {
             State = state;
+        }
+
+        public void SetCurrentPath(List<Node> nodes)
+        {
+            CurrentPath = nodes;
+        }
+        
+        public void OnDrawGizmos()
+        {
+            if (State == TrainState.Mining) return;
+            
+            if (CurrentPath == null) return;
+            
+            Gizmos.color = Color.blue;
+
+            Vector3 lastPoint = View.transform.position;
+
+            for (int i = 1; i < CurrentPath.Count; i++)
+            {
+                Vector3 nextPoint = CurrentPath[i].Position;
+                Gizmos.DrawLine(lastPoint, nextPoint);
+                lastPoint = nextPoint;
+            }
         }
     }
 }

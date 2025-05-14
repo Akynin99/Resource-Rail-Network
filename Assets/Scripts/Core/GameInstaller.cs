@@ -1,5 +1,6 @@
 ﻿using ResourceRailNetwork.Graph;
 using ResourceRailNetwork.GraphRenderer;
+using ResourceRailNetwork.Resource;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,7 @@ namespace ResourceRailNetwork.Core
         {
             Container.Bind<IGraphRenderer>().FromInstance(graphRenderer).AsSingle();
             Container.Bind<IRailNetworkGraph>().FromInstance(railNetworkGraph).AsSingle().NonLazy();
+            Container.Bind<IResourceWallet>().To<ResourceWallet>().AsSingle().NonLazy();
         }
     }
 }

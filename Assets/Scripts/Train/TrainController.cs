@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ResourceRailNetwork.Graph;
+using ResourceRailNetwork.Resource;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +12,7 @@ namespace ResourceRailNetwork.Train
         [SerializeField] private TrainConfig[] trainConfigs;
 
         [Inject] private IRailNetworkGraph _graph;
+        [Inject] private IResourceWallet _wallet;
 
         private TrainModel[] _trains;
         private Route[] _routes;
@@ -50,7 +52,17 @@ namespace ResourceRailNetwork.Train
                 RefreshDebugInfo(train);
             }
         }
-        
+
+        private void OnDrawGizmos()
+        {
+            if (!Application.isPlaying) return;
+            
+            foreach (var train in _trains)
+            {
+                train.OnDrawGizmos();
+            }
+        }
+
         private void OnDestroy()
         {
             _graph.OnGraphUpdated -= RefreshBestRoutes;
@@ -67,16 +79,17 @@ namespace ResourceRailNetwork.Train
                 train.ResetProgress();
                 train.SetLastNode(train.NextNode);
                 
-                if (train.LastNode == train.Route.Mine)
+                if (train.LastNode == train.BestRoute.Mine)
                 {
                     // start mining
                     train.SetState(TrainModel.TrainState.Mining);
                     train.ResetMiningTimer();
-                    train.SetLastMine(train.Route.Mine);
+                    train.SetLastMine(train.BestRoute.Mine);
                 }
                 else
                 {
-                    train.SetNextNode(_graph.GetNextNode(train.LastNode, train.Route.Mine));
+                    train.SetNextNode(_graph.GetNextNode(train.LastNode, train.BestRoute.Mine, out var path));
+                    train.SetCurrentPath(path);
                 }
             }
             
@@ -94,7 +107,8 @@ namespace ResourceRailNetwork.Train
             train.SetCargo(true);
             train.SetState(TrainModel.TrainState.Delivering);
             train.ResetProgress();
-            train.SetNextNode(_graph.GetNextNode(train.LastNode, train.Route.BaseStation));
+            train.SetNextNode(_graph.GetNextNode(train.LastNode, train.BestRoute.BaseStation, out var path));
+            train.SetCurrentPath(path);
             train.SetLastMine(null);
         }
         
@@ -109,16 +123,19 @@ namespace ResourceRailNetwork.Train
                 train.ResetProgress();
                 train.SetLastNode(train.NextNode);
                 
-                if (train.LastNode == train.Route.BaseStation)
+                if (train.LastNode == train.BestRoute.BaseStation)
                 {
                     // cargo delivered, start moving to mine
+                    if (train.HasCargo) _wallet.AddResource(train.BestRoute.BaseStation.ResourceMult);
+                    
                     train.SetState(TrainModel.TrainState.Moving);
                     train.SetCargo(false);
                     train.ResetProgress();
                 }
                 else
                 {
-                    train.SetNextNode(_graph.GetNextNode(train.LastNode, train.Route.BaseStation));
+                    train.SetNextNode(_graph.GetNextNode(train.LastNode, train.BestRoute.BaseStation, out var path));
+                    train.SetCurrentPath(path);
                 }
             }
             
@@ -192,11 +209,11 @@ namespace ResourceRailNetwork.Train
 
             if (train.State == TrainModel.TrainState.Moving)
             {
-                RefreshNextNode(train, train.Route.Mine);
+                RefreshNextNode(train, train.BestRoute.Mine);
             }
             else if (train.State == TrainModel.TrainState.Delivering)
             {
-                RefreshNextNode(train, train.Route.BaseStation);
+                RefreshNextNode(train, train.BestRoute.BaseStation);
             }
         }
 
@@ -205,7 +222,8 @@ namespace ResourceRailNetwork.Train
             if (train.NextNode == null)
             {
                 // train is in the last node
-                train.SetNextNode(_graph.GetNextNode(train.LastNode, target));
+                train.SetNextNode(_graph.GetNextNode(train.LastNode, target, out var path));
+                train.SetCurrentPath(path);
                 return;
             }
             
