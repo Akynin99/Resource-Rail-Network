@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 
-namespace ResourceRailNetwork.Graph
+namespace ResourceRailNetwork.Core
 {
+    /// <summary>
+    /// Base station node handling resource multiplication in a rail network.
+    /// Inherits core node functionality and tracks resource multiplier changes at runtime.
+    /// </summary>
     public class BaseStation : Node
     {
         [SerializeField] private float resourceMult;

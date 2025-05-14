@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using ResourceRailNetwork.GraphRenderer;
+using ResourceRailNetwork.Core;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 using Random = UnityEngine.Random;
 
 namespace ResourceRailNetwork.Graph
 {
+    /// <summary>
+    /// Central graph manager handling rail network topology. Maintains node relationships,
+    /// precomputes critical paths, and provides graph traversal utilities. Implements
+    /// observer pattern for real-time graph change notifications.
+    /// </summary>
     public class RailNetworkGraph : MonoBehaviour, IRailNetworkGraph
     {
         [SerializeField] private Node[] allNodes;
@@ -20,10 +23,12 @@ namespace ResourceRailNetwork.Graph
 
         private void Awake()
         {
+            // Initialize node tracking and event subscriptions
             foreach (var node in allNodes)
             {
                 node.OnSettingsChanged += OnSettingsChanged;
                 
+                // Categorize special node types
                 Mine mine = node as Mine;
                 if (mine != null)
                 {
@@ -43,10 +48,10 @@ namespace ResourceRailNetwork.Graph
             PrecalculatePaths();
         }
 
-        private void OnSettingsChanged()
-        {
-            OnGraphUpdated?.Invoke();
-        }
+        /// <summary>
+        /// Handle graph changes by notifying subscribers through event
+        /// </summary>
+        private void OnSettingsChanged() => OnGraphUpdated?.Invoke();
 
         private void OnDestroy()
         {
@@ -55,14 +60,18 @@ namespace ResourceRailNetwork.Graph
                 node.OnSettingsChanged -= OnSettingsChanged;
             }
         }
-
+        
+        /// <summary>
+        /// Precompute paths between all nodes and special nodes (Mines/BaseStations)
+        /// Optimizes frequent path queries at runtime
+        /// </summary>
         private void PrecalculatePaths()
         {
             foreach (var node in allNodes)
             {
                 foreach (var specificNode in _specificNodes)
                 {
-                    if (node == specificNode) continue;
+                    if (node == specificNode) continue; // Skip self-connections
 
                     int distance;
                     List<Node> path = _pathFinder.FindShortestPath(allNodes, node, specificNode, out distance);
@@ -70,7 +79,7 @@ namespace ResourceRailNetwork.Graph
                     PrecalculatedPath precalculatedPath = new PrecalculatedPath()
                     {
                         TargetNode = specificNode,
-                        NextNodeInPath = path[1],
+                        NextNodeInPath = path[1], // First hop in path
                         Path = path,
                         Distance = distance,
                     };
@@ -78,11 +87,6 @@ namespace ResourceRailNetwork.Graph
                     node.AddPrecalculatedPath(precalculatedPath);
                 }
             }
-        }
-
-        public Node[] FindPath()
-        {
-            return null;
         }
 
         public Node[] GetAllNodes()
@@ -112,6 +116,10 @@ namespace ResourceRailNetwork.Graph
             return _allBaseStations;
         }
 
+        /// <summary>
+        /// Get distance between nodes using precomputed paths when available
+        /// </summary>
+        /// <returns>-1 if no path exists</returns>
         public int GetDistance(Node start, Node end)
         {
             if (_specificNodes.Contains(end))
@@ -124,11 +132,15 @@ namespace ResourceRailNetwork.Graph
                 }
             }
 
+            // Fallback to real-time calculation
             _pathFinder.FindShortestPath(allNodes, start, end, out var distance);
-
             return distance;
         }
 
+        /// <summary>
+        /// Get immediate next node in path to target
+        /// </summary>
+        /// <param name="path">Full node sequence output (if needed)</param>
         public Node GetNextNode(Node start, Node end, out List<Node> path)
         {
             if (_specificNodes.Contains(end))
@@ -150,6 +162,9 @@ namespace ResourceRailNetwork.Graph
             return path[1];
         }
 
+        /// <summary>
+        /// Event triggered when parameters modified
+        /// </summary>
         public event Action OnGraphUpdated;
     }
 }

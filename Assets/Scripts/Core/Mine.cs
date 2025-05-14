@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 
-namespace ResourceRailNetwork.Graph
+namespace ResourceRailNetwork.Core
 {
+    /// <summary>
+    /// Mining node specialization handling time multiplier logic. Inherits Node functionality,
+    /// ensures non-negative time values, and tracks runtime multiplier changes in editor.
+    /// </summary>
     public class Mine : Node
     {
         [SerializeField] private float timeMult;

@@ -1,6 +1,7 @@
 ﻿using System;
+using ResourceRailNetwork.Interfaces;
 
-namespace ResourceRailNetwork.Resource
+namespace ResourceRailNetwork
 {
     public class ResourceWallet : IResourceWallet
     {

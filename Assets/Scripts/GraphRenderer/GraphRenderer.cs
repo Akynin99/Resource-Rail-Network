@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using ResourceRailNetwork.Core;
 using ResourceRailNetwork.Graph;
 using UnityEngine;
 using Zenject;
 
 namespace ResourceRailNetwork.GraphRenderer
 {
+    /// <summary>
+    /// Visualizes rail network connections using different line styles based on edge properties.
+    /// Creates 3D line representations for correct, one-way, and mismatched length connections.
+    /// </summary>
     public class GraphRenderer : MonoBehaviour, IGraphRenderer
     {
         [SerializeField] private LineRenderer correctEdgeRendererPrefab;

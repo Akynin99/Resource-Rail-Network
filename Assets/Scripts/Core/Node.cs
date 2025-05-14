@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ResourceRailNetwork.Graph
+namespace ResourceRailNetwork.Core
 {
+    /// <summary>
+    /// Core network node managing connections and path data. Handles edges, stores precalculated paths,
+    /// provides position information, and triggers events on changes. Includes editor visualization for connections.
+    /// </summary>
     public class Node : MonoBehaviour
     {
         [SerializeField] protected Edge[] edges;

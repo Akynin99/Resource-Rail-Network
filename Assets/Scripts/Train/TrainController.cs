@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using ResourceRailNetwork.Core;
 using ResourceRailNetwork.Graph;
-using ResourceRailNetwork.Resource;
+using ResourceRailNetwork.Interfaces;
 using UnityEngine;
 using Zenject;
 
 namespace ResourceRailNetwork.Train
 {
+    /// <summary>
+    /// Central controller managing train logistics, route optimization and resource operations.
+    /// Handles train state transitions, profit calculations, and dynamic route adjustments.
+    /// </summary>
     public class TrainController : MonoBehaviour
     {
         [SerializeField] private TrainConfig[] trainConfigs;

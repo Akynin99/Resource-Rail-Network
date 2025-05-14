@@ -1,8 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ResourceRailNetwork.Graph
+namespace ResourceRailNetwork.Core
 {
+    /// <summary>
+    /// Represents a directional connection between nodes in a rail network. Defines traversal cost/distance
+    /// for pathfinding calculations. Serialized for editor configuration.
+    /// </summary>
     [Serializable]
     public class Edge
     {

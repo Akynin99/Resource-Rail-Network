@@ -1,4 +1,5 @@
-﻿using ResourceRailNetwork.Graph;
+﻿using ResourceRailNetwork.Core;
+using ResourceRailNetwork.Graph;
 
 namespace ResourceRailNetwork.Train
 {

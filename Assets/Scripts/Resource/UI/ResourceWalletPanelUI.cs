@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ResourceRailNetwork.Interfaces;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace ResourceRailNetwork.Resource
+namespace ResourceRailNetwork
 {
     public class ResourceWalletPanelUI : MonoBehaviour
     {

@@ -1,10 +1,10 @@
 ﻿using ResourceRailNetwork.Graph;
 using ResourceRailNetwork.GraphRenderer;
-using ResourceRailNetwork.Resource;
+using ResourceRailNetwork.Interfaces;
 using UnityEngine;
 using Zenject;
 
-namespace ResourceRailNetwork.Core
+namespace ResourceRailNetwork
 {
     public class GameInstaller : MonoInstaller
     {

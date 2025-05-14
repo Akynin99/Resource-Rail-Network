@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
+using ResourceRailNetwork.Core;
 using ResourceRailNetwork.Graph;
 
 namespace ResourceRailNetwork.GraphRenderer
 {
+    /// <summary>
+    /// Analyzes node connections to generate visual edges.
+    /// Handles duplicate connection prevention and edge type detection logic.
+    /// </summary>
     public static class GraphRendererEdgeGenerator
     {
         public static List<GraphEdge> CreateEdges(Node[] nodes)
