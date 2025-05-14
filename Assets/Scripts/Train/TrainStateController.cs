@@ -45,7 +45,7 @@ namespace ResourceRailNetwork.Train
             {
                 train.SetNextNode(train.LastNode);
                 HandleMovementCompletion(train);
-                train.RefreshViewPos();
+                train.RefreshView();
             }
 
             float dist = deltaTime * train.Speed;
@@ -57,7 +57,7 @@ namespace ResourceRailNetwork.Train
                 HandleMovementCompletion(train);
             }
 
-            train.RefreshViewPos();
+            train.RefreshView();
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace ResourceRailNetwork.Train
                 HandleDeliveryCompletion(train);
             }
 
-            train.RefreshViewPos();
+            train.RefreshView();
         }
 
         private void HandleDeliveryCompletion(TrainModel train)

@@ -97,7 +97,7 @@ namespace ResourceRailNetwork.Train
             LastMine = mine;
         }
 
-        public void RefreshViewPos()
+        public void RefreshView()
         {
             if (NextNode == null)
             {
@@ -108,6 +108,7 @@ namespace ResourceRailNetwork.Train
             
             Vector3 pos  = Vector3.Lerp(LastNode.Position, NextNode.Position, Progress);
             View.transform.position = pos;
+            View.transform.forward = NextNode.Position - LastNode.Position;
         }
 
         public void SetState(TrainState state)
