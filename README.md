@@ -1,7 +1,6 @@
 # Rail Resource Network Simulator
 
-![Demo Preview](https://via.placeholder.com/800x400.png?text=Rail+Network+Demo)  
-*(Replace with actual screenshot)*
+![Demo Preview](https://github.com/Akynin99/Resource-Rail-Network/blob/dev/Screenshots/ezgif-822e775c32cff2.gif)  
 
 ## 📝 Project Description
 **Test Assignment**  
@@ -10,7 +9,6 @@ Key technical aspects include:
 - Node-based graph system with pathfinding (Dijkstra's algorithm)
 - Dynamic route optimization with economic calculations
 - Runtime-editable train parameters
-- Event-driven architecture for network changes
 - Zenject dependency injection
 
 ## 🏗️ Architecture Overview
