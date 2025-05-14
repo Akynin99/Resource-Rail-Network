@@ -6,7 +6,7 @@ namespace ResourceRailNetwork.Train
     public class TrainDebugInfo : MonoBehaviour
     {
         [ReadOnly]
-        public string readOnlyText = "Текст нельзя изменить";
+        public string readOnlyText;
 
         public void SetText(string text)
         {

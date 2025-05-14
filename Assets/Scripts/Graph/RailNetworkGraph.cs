@@ -22,6 +22,8 @@ namespace ResourceRailNetwork.Graph
         {
             foreach (var node in allNodes)
             {
+                node.OnSettingsChanged += OnSettingsChanged;
+                
                 Mine mine = node as Mine;
                 if (mine != null)
                 {
@@ -39,6 +41,19 @@ namespace ResourceRailNetwork.Graph
             }
             
             PrecalculatePaths();
+        }
+
+        private void OnSettingsChanged()
+        {
+            OnGraphUpdated?.Invoke();
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var node in allNodes)
+            {
+                node.OnSettingsChanged -= OnSettingsChanged;
+            }
         }
 
         private void PrecalculatePaths()
@@ -129,5 +144,7 @@ namespace ResourceRailNetwork.Graph
 
             return path[1];
         }
+
+        public event Action OnGraphUpdated;
     }
 }

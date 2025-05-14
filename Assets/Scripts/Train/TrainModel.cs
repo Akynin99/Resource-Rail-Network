@@ -5,24 +5,19 @@ namespace ResourceRailNetwork.Train
 {
     public class TrainModel
     {
-        private TrainSettings _trainSettings;
-
-        public GameObject View { get; }
+        public TrainSettings TrainSettings { get; }
         public TrainDebugInfo DebugInfo { get; }
-
         public Node LastNode { get; private set; }
         public Mine LastMine { get; private set; }
-
         public Node NextNode { get; private set; }
-
         public float Progress { get; private set; }
-
         public TrainState State { get; private set; }
         public Route Route { get; private set; }
         public bool HasCargo { get; private set; }
         public float MiningTimer { get; private set; }
-        public float Speed => _trainSettings.Speed;
-        public float MiningDuration => _trainSettings.MiningTime;
+        private GameObject View { get; }
+        public float Speed => TrainSettings.Speed;
+        public float MiningDuration => TrainSettings.MiningTime;
 
         public enum TrainState
         {
@@ -33,13 +28,18 @@ namespace ResourceRailNetwork.Train
 
         public TrainModel(TrainSettings trainSettings, TrainDebugInfo debugInfo, GameObject trainView, Node startNode)
         {
-            _trainSettings = trainSettings;
+            TrainSettings = trainSettings;
             DebugInfo = debugInfo;
             View = trainView;
             LastNode = startNode;
             State = TrainState.Moving;
             Progress = 0;
             HasCargo = false;
+        }
+
+        private void OnSettingsChanged()
+        {
+            
         }
 
         public void SetRoute(Route route)

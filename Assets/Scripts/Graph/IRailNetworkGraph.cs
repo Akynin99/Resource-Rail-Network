@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ResourceRailNetwork.Graph
 {
@@ -12,5 +13,6 @@ namespace ResourceRailNetwork.Graph
         public List<BaseStation> GetAllBaseStations();
         public int GetDistance(Node start, Node end);
         public Node GetNextNode(Node start, Node end);
+        public event Action OnGraphUpdated;
     }
 }

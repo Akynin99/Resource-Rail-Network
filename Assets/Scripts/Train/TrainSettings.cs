@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ResourceRailNetwork.Train
 {
@@ -6,14 +7,38 @@ namespace ResourceRailNetwork.Train
     {
         [SerializeField] private float speed;
         [SerializeField] private float miningTime;
+
+        private float _lastSpeed;
+        private float _lastMiningTime;
+        private TrainController _trainController;
+        private TrainModel _trainModel;
         
         public float Speed => speed;
         public float MiningTime => miningTime;
 
-        public void Init(float initialSpeed, float initialMiningTime)
+        public void Init(float initialSpeed, float initialMiningTime, TrainController trainController, TrainModel trainModel)
         {
             speed = initialSpeed;
+            _lastSpeed = speed;
             miningTime = initialMiningTime;
+            _lastMiningTime = miningTime;
+            _trainController = trainController;
+            _trainModel = trainModel;
         }
+        
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (!Application.isPlaying || !_trainController) return;
+
+            if (Mathf.Approximately(_lastSpeed, speed) || Mathf.Approximately(_lastMiningTime, miningTime))
+            {
+                _lastSpeed = speed;
+                _lastMiningTime = miningTime;
+                
+                _trainController.OnTrainSettingsChanged(_trainModel);
+            }
+        }
+#endif
     }
 }

@@ -18,10 +18,12 @@ namespace ResourceRailNetwork.Train
 
         private void Start()
         {
-            _trains = _trainSpawner.SpawnTrains(trainConfigs, transform, _graph);
+            _trains = _trainSpawner.SpawnTrains(trainConfigs, transform, _graph, this);
             
             CreateRoutes();
             RefreshBestRoutes();
+
+            _graph.OnGraphUpdated += RefreshBestRoutes;
         }
 
         private void Update()
@@ -47,8 +49,11 @@ namespace ResourceRailNetwork.Train
                 
                 RefreshDebugInfo(train);
             }
-            
-            
+        }
+        
+        private void OnDestroy()
+        {
+            _graph.OnGraphUpdated -= RefreshBestRoutes;
         }
 
         private void MovingProcessing(TrainModel train, float deltaTime)
@@ -80,10 +85,10 @@ namespace ResourceRailNetwork.Train
         
         private void MiningProcessing(TrainModel train, float deltaTime)
         {
-            float diff = deltaTime * train.LastMine.TimeMult;
+            float diff = deltaTime;
             train.IncrementMiningTimer(diff);
 
-            if (train.MiningTimer < train.MiningDuration) return;
+            if (train.MiningTimer < train.MiningDuration * train.LastMine.TimeMult) return;
             
             // get cargo, start delivering
             train.SetCargo(true);
@@ -124,9 +129,16 @@ namespace ResourceRailNetwork.Train
         {
             #if UNITY_EDITOR
 
-            string str = train.State == TrainModel.TrainState.Mining
-                ? $"{train.State}, Timer: {train.MiningTimer} / {train.MiningDuration}"
-                : $"{train.State}, Progress: {train.Progress}.";
+            string str;
+
+            if (train.State == TrainModel.TrainState.Mining)
+            {
+                str = $"{train.State}, Timer: {(int)train.MiningTimer} / {train.MiningDuration * train.LastMine.TimeMult}";
+            }
+            else
+            {
+                str = $"{train.State}, Progress: {train.Progress}.";
+            }
             
             train.DebugInfo.SetText(str);
                 
@@ -219,10 +231,15 @@ namespace ResourceRailNetwork.Train
 
         private float CalculateProfitPerSecond(Route route, TrainModel train)
         {
-            float duration = route.Distance / train.Speed * 2 + train.MiningDuration / route.Mine.TimeMult;
+            float duration = route.Distance / train.Speed * 2 + train.MiningDuration * route.Mine.TimeMult;
             float profit = route.BaseStation.ResourceMult;
 
             return profit / duration;
+        }
+
+        public void OnTrainSettingsChanged(TrainModel train)
+        {
+            FindBestRoute(train);
         }
     }
 }

@@ -15,13 +15,15 @@ namespace ResourceRailNetwork.Graph
 
         public Vector3 Position => _position;
 
+        public event Action OnSettingsChanged;
+
         private void OnDrawGizmos()
         {
             if (edges == null || edges.Length < 1) return;
 
             foreach (var edge in edges)
             {
-                if (edge == null || edge.EndNode == null || edge.Length < 0) continue;
+                if (edge == null || edge.EndNode == null) continue;
                 
                 Vector3 startPos = transform.position;
                 Vector3 endPos = edge.EndNode.transform.position;
@@ -39,6 +41,16 @@ namespace ResourceRailNetwork.Graph
                 Gizmos.DrawLine(startPos, endPos);
             }
         }
+        
+        protected virtual void Awake()
+        {
+            _position = transform.position;
+        }
+
+        protected void SettingsChanged()
+        {
+            OnSettingsChanged?.Invoke();
+        }
 
         public bool IsConnectedTo(Node node)
         {
@@ -50,11 +62,6 @@ namespace ResourceRailNetwork.Graph
             }
 
             return false;
-        }
-
-        private void Awake()
-        {
-            _position = transform.position;
         }
 
         public int LengthTo(Node node)

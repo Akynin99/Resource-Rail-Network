@@ -465,8 +465,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trainConfigs:
   - {fileID: 11400000, guid: 25ded5e12f0e8844194eccb671f6179c, type: 2}
-  - {fileID: 11400000, guid: 3f62dc939232e4c40a77fc86d6dc752d, type: 2}
-  - {fileID: 11400000, guid: e3e7ee428ba4bdd45abdeb64c4714603, type: 2}
 --- !u!4 &455782921
 Transform:
   m_ObjectHideFlags: 0
