@@ -7,9 +7,9 @@ namespace ResourceRailNetwork.Graph
     public class Edge
     {
         [SerializeField] private Node endNode;
-        [SerializeField] private int length;
+        [SerializeField] private uint length;
         
         public Node EndNode => endNode;
-        public int Length => length;
+        public uint Length => length;
     }
 }

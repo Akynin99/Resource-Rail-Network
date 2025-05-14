@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ResourceRailNetwork.Graph
@@ -8,6 +9,7 @@ namespace ResourceRailNetwork.Graph
         [SerializeField] protected Edge[] edges;
 
         public Edge[] Edges => edges;
+        public List<PrecalculatedPath> CalculatedPaths { get; private set; }
 
         private void OnDrawGizmos()
         {
@@ -52,10 +54,17 @@ namespace ResourceRailNetwork.Graph
 
             foreach (var edge in edges)
             {
-                if (edge.EndNode == node) return edge.Length;
+                if (edge.EndNode == node) return (int)edge.Length;
             }
 
             return -1;
+        }
+
+        public void AddPrecalculatedPath(PrecalculatedPath path)
+        {
+            CalculatedPaths ??= new List<PrecalculatedPath>();
+            
+            CalculatedPaths.Add(path);
         }
     }
 }
