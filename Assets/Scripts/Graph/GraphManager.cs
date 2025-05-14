@@ -60,8 +60,6 @@ namespace ResourceRailNetwork.Graph
             }
         }
 
-        
-
         public Node[] FindPath()
         {
             return null;
