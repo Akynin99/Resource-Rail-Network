@@ -68,6 +68,8 @@ Key technical aspects include:
      - **RailNetworkGraph** component (manages all nodes)
      - Child node GameObjects representing stations/mines
 
+![Demo Preview](https://github.com/Akynin99/Resource-Rail-Network/blob/dev/Screenshots/settings.png) 
+
 2. **Node Configuration**:
    - Select any child node in Graph hierarchy
    - Configure connections in **Node** component:
@@ -77,6 +79,8 @@ Key technical aspects include:
      - **Mine**: Set `Time Mult` (mining speed multiplier)
      - **BaseStation**: Set `Resource Mult` (processing efficiency)
 
+![Demo Preview](https://github.com/Akynin99/Resource-Rail-Network/blob/dev/Screenshots/base%20station.png)  ![Demo Preview](https://github.com/Akynin99/Resource-Rail-Network/blob/dev/Screenshots/mine.png) 
+
 ### Train Configuration
 1. **Initial Setup**:
    - Preconfigure trains using `TrainConfig` assets:
@@ -84,6 +88,8 @@ Key technical aspects include:
      - Set base parameters:
        - Movement Speed
        - Mining Duration
+
+![Demo Preview](https://github.com/Akynin99/Resource-Rail-Network/blob/dev/Screenshots/config.png) 
 
 2. **Runtime Adjustments**:
    - Locate `TrainController` GameObject in hierarchy
@@ -95,3 +101,5 @@ Key technical aspects include:
      - Route calculations
      - Movement behavior
      - Resource collection rates
+
+![Demo Preview](https://github.com/Akynin99/Resource-Rail-Network/blob/dev/Screenshots/settings2.png) 
