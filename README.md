@@ -1,3 +1,5 @@
+Unity version 6000.0.45f1
+
 # Rail Resource Network Simulator
 
 ![Demo Preview](https://github.com/Akynin99/Resource-Rail-Network/blob/dev/Screenshots/ezgif-822e775c32cff2.gif)  
