@@ -50,10 +50,15 @@ namespace ResourceRailNetwork.Train
             }
 
             float dist = deltaTime * train.Speed;
-            float diff = dist / _graph.GetDistance(train.LastNode, train.NextNode);
-            train.IncrementProgress(diff);
+            float distanceBetweenNodes = _graph.GetDistance(train.LastNode, train.NextNode);
+            
+            if (distanceBetweenNodes > 0)
+            {
+                float diff = dist / distanceBetweenNodes;
+                train.IncrementProgress(diff);
+            }
 
-            if (train.Progress >= 1)
+            if (train.Progress >= 1 || distanceBetweenNodes <= 0)
             {
                 HandleMovementCompletion(train);
             }
@@ -109,10 +114,15 @@ namespace ResourceRailNetwork.Train
         private void UpdateDeliveringState(TrainModel train, float deltaTime)
         {
             float dist = deltaTime * train.Speed;
-            float diff = dist / _graph.GetDistance(train.LastNode, train.NextNode);
-            train.IncrementProgress(diff);
+            float distanceBetweenNodes = _graph.GetDistance(train.LastNode, train.NextNode);
 
-            if (train.Progress >= 1)
+            if (distanceBetweenNodes > 0)
+            {
+                float diff = dist / distanceBetweenNodes;
+                train.IncrementProgress(diff);
+            }
+
+            if (train.Progress >= 1 || distanceBetweenNodes <= 0)
             {
                 HandleDeliveryCompletion(train);
             }
